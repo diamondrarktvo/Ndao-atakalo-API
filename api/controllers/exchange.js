@@ -1,5 +1,10 @@
 const Exchange = require('../models/Exchange');
 
+exports.createExchange = (req, res, next) => {
+    //const exchange = JSON.parse(req.body);
+    
+}
+
 exports.getAllExchange = (req, res, next) => {
     Exchange.find()
         .then((exchanges) => res.status(200).json(exchanges))

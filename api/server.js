@@ -39,7 +39,7 @@ function handleError(error){
 function handleListen(){
     const adresse = server.address();
     const bind = typeof adresse === 'string' ? 'pipe ' + bind : 'port ' + port;
-    console.log('Server listen at port ' + bind);
+    console.log('Server listen at  ' + bind);
 }
 
 const server = http.createServer(app);
