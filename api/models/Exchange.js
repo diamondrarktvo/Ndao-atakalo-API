@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
  * Exchange model
  */
 const exchangeSchema = mongoose.Schema({
-    userId: {type: Number, required: true},
+    userId: {type: String, required: true},
     user : {type: String, required: true},
     contact: {type: String, required: true},
     exchangeTo: {type: String, required: true},

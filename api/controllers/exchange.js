@@ -9,7 +9,7 @@ exports.createExchange = (req, res, next) => {
     delete exchangeObj.userId;
     const exchange = new Exchange({
         ...exchangeObj,
-        //userId: req.auth.userId,
+        userId: req.auth.userId,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
     exchange.save()
