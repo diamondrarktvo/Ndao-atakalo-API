@@ -38,15 +38,15 @@ exports.updateExchange = (req, res, next) => {
 
 exports.deleteOneExchange = (req, res, next) => {
     Exchange.findOne({_id: req.params.id})
-            .then((exchange) => {
-                const fichierName = exchange.imageUrl.split('/images/')[1];
-                fs.unlink(`public/images/${fichierName}`, () => {
-                    Exchange.deleteOne({_id: req.params.id})
-                        .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
-                        .catch((error) => res.status(500).json({error}));
-                    })
-            })
-            .catch((error) => res.status(404).json({error}));
+        .then((exchange) => {
+            const fichierName = exchange.imageUrl.split('/images/')[1];
+            fs.unlink(`public/images/${fichierName}`, () => {
+                Exchange.deleteOne({_id: req.params.id})
+                    .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
+                    .catch((error) => res.status(500).json({error}));
+                })
+        })
+        .catch((error) => res.status(404).json({error}));
 }
 
 /**

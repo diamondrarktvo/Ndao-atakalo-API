@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+/**
+ * Exchange model
+ */
 const exchangeSchema = mongoose.Schema({
     userId: {type: Number, required: true},
     user : {type: String, required: true},
