@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post('/', multer, exchangeCtrl.createExchange);
 router.patch('/:id', multer, exchangeCtrl.updateExchange);
+router.delete('/:id', exchangeCtrl.deleteOneExchange);
 router.get('/list', exchangeCtrl.getAllExchange);
 router.get('/:id', exchangeCtrl.getOneExchange);
 

@@ -1,4 +1,5 @@
 const Exchange = require('../models/Exchange');
+const fs = require('fs');
 
 /**
  * Create controller
@@ -29,6 +30,23 @@ exports.updateExchange = (req, res, next) => {
                     .catch((error) => res.status(404).json({error}));
         })
         .catch((error) => res.status(404).json({error}));
+}
+
+/**
+ * Delete one exchange
+ */
+
+exports.deleteOneExchange = (req, res, next) => {
+    Exchange.findOne({_id: req.params.id})
+            .then((exchange) => {
+                const fichierName = exchange.imageUrl.split('/images/')[1];
+                fs.unlink(`public/images/${fichierName}`, () => {
+                    Exchange.deleteOne({_id: req.params.id})
+                        .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
+                        .catch((error) => res.status(500).json({error}));
+                    })
+            })
+            .catch((error) => res.status(404).json({error}));
 }
 
 /**
