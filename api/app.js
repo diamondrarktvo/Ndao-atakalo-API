@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const routeExchange = require('./routes/routeExchange');
 const app = express();
 
-mongoose.connect(`mongodb+srv://dama:${process.env.PASS}@cluster-dama.qgpqn.mongodb.net/?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://dama:${process.env.DB_PASSWORD}@cluster-dama.qgpqn.mongodb.net/${process.env.DB_DATABASE}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 })
 app.use(bodyParser.json());
 
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 //app.use('/api/v1/auth', routeAuth);
 app.use('/api/v1/exchange', routeExchange);
 
