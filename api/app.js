@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const routeAuth = require('./routes/routeAuth');
 const routeExchange = require('./routes/routeExchange');
 const app = express();
