@@ -3,9 +3,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 //const routeAuth = require('./routes/routeAuth');
 const routeExchange = require('./routes/routeExchange');
 const app = express();
+
+/**
+ * Create image directory dynamically
+ */
+const img_directory = "./public/images";
+
+if(!fs.existsSync(img_directory)){
+    fs.mkdirSync(img_directory, {recursive: true});
+}
 
 mongoose.connect(`mongodb+srv://dama:${process.env.DB_PASSWORD}@cluster-dama.qgpqn.mongodb.net/${process.env.DB_DATABASE}`, {
         useNewUrlParser: true,
