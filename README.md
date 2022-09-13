@@ -1,3 +1,4 @@
+<div id="top"></div>
 # NDAO ATAKALO API
 ### Inona izy ty (c'est quoi) ?
 <p> <img src="img/malagasy.png" width="30" height="20" /> MG: Rehefa miha-lehibe isika dia mety tsy te-hilalao an'ilay<br>
@@ -13,8 +14,6 @@ notre jouet, ou l'enfant peut s'ennuyer de son jouet et vouloir l'échanger</p>
 
 <p><strong>Ndao atakalo API</strong> est une API REST qui permet d'effectuer cet échange <br>
 
-
-<div id="top"></div>
 
 ### Built With
 
