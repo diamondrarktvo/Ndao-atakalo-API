@@ -47,7 +47,7 @@ Installer nodejs
    git clone https://github.com/diamondrarktvo/Ndao-atakalo-API
    ```
 2. Place dans le dossier
-  ```sh
+   ```sh
    cd api
    ```
 3. Install NPM packages
