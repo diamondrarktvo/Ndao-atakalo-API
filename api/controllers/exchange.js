@@ -15,7 +15,7 @@ exports.createExchange = (req, res, next) => {
     })
     exchange.save()
         .then(() => res.status(201).json({message: "Echange créé avec succès!"}))
-        .catch((error) => res.status(400).json({error}));
+        .catch(() => res.status(400).json({error: "Il y a une erreur survenue à la création de cet échange!"}));
 };
 
 /**
@@ -24,10 +24,15 @@ exports.createExchange = (req, res, next) => {
 exports.changeStatusExchange = (req, res, next) => {
     Exchange.findOne({_id: req.params.id})
             .then((exchange) => {
-                const exchangeStatus = exchange.status;
-                
+                if(parseInt(req.params.id) !== parseInt(exchange._id)){
+                    res.status(401).json({message: "Non authorizer à modifier cet echange!"})
+                }else {
+                    Exchange.updateOne({_id: req.params.id}, { status: req.body.status === "active" ? 1 : 0, _id: req.params.id})
+                        .then(() => res.status(200).json({message: `Status modifier avec succès!`}))
+                        .catch(() => res.status(400).json({error: "Erreur à la mise à jour de cet échange"}));
+                }
             })
-            .catch((error) => res.status(404).json({error}))
+            .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}))
 }
 
 /**
@@ -46,9 +51,9 @@ exports.updateExchange = (req, res, next) => {
         .then((exchange) => {
             Exchange.updateOne({_id: req.params.id}, {...exchangeObj, _id: req.params.id})
                     .then(() => res.status(200).json({message: "Echange modifié avec succès!"}))
-                    .catch((error) => res.status(404).json({error}));
+                    .catch(() => res.status(404).json({error: "Erreur à la mise à jour de cet échange!"}));
         })
-        .catch((error) => res.status(404).json({error}));
+        .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}));
 }
 
 /**
@@ -62,10 +67,10 @@ exports.deleteOneExchange = (req, res, next) => {
             fs.unlink(`public/images/${fichierName}`, () => {
                 Exchange.deleteOne({_id: req.params.id})
                     .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
-                    .catch((error) => res.status(500).json({error}));
+                    .catch(() => res.status(500).json({error: "Erreur survenue au serveur"}));
                 })
         })
-        .catch((error) => res.status(404).json({error}));
+        .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}));
 }
 
 /**
@@ -74,7 +79,7 @@ exports.deleteOneExchange = (req, res, next) => {
 exports.getOneExchange = (req, res, next) => {
     Exchange.findOne({_id: req.params.id})
         .then((exchange) => res.status(200).json(exchange))
-        .catch((error) => res.status(404).json({error}));
+        .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}));
 };
 
 /**
@@ -83,5 +88,5 @@ exports.getOneExchange = (req, res, next) => {
 exports.getAllExchange = (req, res, next) => {
     Exchange.find()
         .then((exchanges) => res.status(200).json(exchanges))
-        .catch((error) => res.status(400).json({error}));
+        .catch(() => res.status(400).json({error: "Impossible d'obtenir la liste!"}));
 };
