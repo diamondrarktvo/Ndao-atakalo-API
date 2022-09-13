@@ -121,7 +121,7 @@ Les routes :
 ```
 ### UPDATE UN ECHANGE
    ```
-3. PUT http://<host>:3030/api/v1/exchange/:id (id de l'échange)
+3. PATCH http://<host>:3030/api/v1/exchange/:id (id de l'échange)
   content-type: multipart/form-data
   Authorization: Bearer <token>
 {
