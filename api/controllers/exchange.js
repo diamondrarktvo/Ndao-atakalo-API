@@ -41,17 +41,16 @@ exports.changeStatusExchange = (req, res, next) => {
 exports.updateExchange = (req, res, next) => {
     const exchangeObj = req.file ? {
         ...req.body,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        status: req.status === 'active' ? 1 : 0
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : {
-        ...req.body, 
-        status: req.status === 'active' ? 1 : 0
+        ...req.body
     };
     Exchange.findOne({_id: req.params.id})
         .then((exchange) => {
             if(parseInt(req.body.userId) !== parseInt(req.auth.userId)){
                 return res.status(401).json({error: "Non authorizer à modifier cet échange!"});
             }else{
+                req.body.status ? exchangeObj.status = req.body.status : exchange.status;
                 Exchange.updateOne({_id: req.params.id}, {...exchangeObj, _id: req.params.id})
                     .then(() => res.status(200).json({message: "Echange modifié avec succès!"}))
                     .catch(() => res.status(404).json({error: "Erreur à la mise à jour de cet échange!"}));
