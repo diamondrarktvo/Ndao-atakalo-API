@@ -8,7 +8,8 @@ const exchangeSchema = mongoose.Schema({
     user : {type: String, required: true},
     contact: {type: String, required: true},
     exchangeTo: {type: String, required: true},
-    imageUrl: {type: String, required: true}
+    imageUrl: {type: String, required: true},
+    status: {type: Number, required: true}
 });
 
 module.exports = mongoose.model('Exchange', exchangeSchema);

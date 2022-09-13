@@ -10,7 +10,8 @@ exports.createExchange = (req, res, next) => {
     const exchange = new Exchange({
         ...exchangeObj,
         userId: req.auth.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        status: exchangeObj.status === 'active' ? 1 : 0
     })
     exchange.save()
         .then(() => res.status(201).json({message: "Echange créé avec succès!"}))
@@ -18,13 +19,29 @@ exports.createExchange = (req, res, next) => {
 };
 
 /**
+ * Change status exchange
+ */
+exports.changeStatusExchange = (req, res, next) => {
+    Exchange.findOne({_id: req.params.id})
+            .then((exchange) => {
+                const exchangeStatus = exchange.status;
+                
+            })
+            .catch((error) => res.status(404).json({error}))
+}
+
+/**
  * Update controller
  */
 exports.updateExchange = (req, res, next) => {
     const exchangeObj = req.file ? {
         ...req.body,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : {...req.body};
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        status: req.status === 'active' ? 1 : 0
+    } : {
+        ...req.body, 
+        status: req.status === 'active' ? 1 : 0
+    };
     Exchange.findOne({_id: req.params.id})
         .then((exchange) => {
             Exchange.updateOne({_id: req.params.id}, {...exchangeObj, _id: req.params.id})
