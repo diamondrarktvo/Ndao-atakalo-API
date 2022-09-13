@@ -25,7 +25,7 @@ exports.changeStatusExchange = (req, res, next) => {
     Exchange.findOne({_id: req.params.id})
             .then((exchange) => {
                 if(parseInt(req.params.id) !== parseInt(exchange._id)){
-                    res.status(401).json({message: "Non authorizer à modifier cet echange!"})
+                    return res.status(401).json({message: "Non authorizer à modifier le status cet echange!"});
                 }else {
                     Exchange.updateOne({_id: req.params.id}, { status: req.body.status === "active" ? 1 : 0, _id: req.params.id})
                         .then(() => res.status(200).json({message: `Status modifier avec succès!`}))
@@ -49,9 +49,13 @@ exports.updateExchange = (req, res, next) => {
     };
     Exchange.findOne({_id: req.params.id})
         .then((exchange) => {
-            Exchange.updateOne({_id: req.params.id}, {...exchangeObj, _id: req.params.id})
+            if(parseInt(req.body.userId) !== parseInt(req.auth.userId)){
+                return res.status(401).json({error: "Non authorizer à modifier cet échange!"});
+            }else{
+                Exchange.updateOne({_id: req.params.id}, {...exchangeObj, _id: req.params.id})
                     .then(() => res.status(200).json({message: "Echange modifié avec succès!"}))
                     .catch(() => res.status(404).json({error: "Erreur à la mise à jour de cet échange!"}));
+            }
         })
         .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}));
 }
@@ -63,12 +67,16 @@ exports.updateExchange = (req, res, next) => {
 exports.deleteOneExchange = (req, res, next) => {
     Exchange.findOne({_id: req.params.id})
         .then((exchange) => {
-            const fichierName = exchange.imageUrl.split('/images/')[1];
-            fs.unlink(`public/images/${fichierName}`, () => {
-                Exchange.deleteOne({_id: req.params.id})
-                    .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
-                    .catch(() => res.status(500).json({error: "Erreur survenue au serveur"}));
-                })
+            if(parseInt(exchange.userId) !== parseInt(req.auth.userId)){
+                return res.status(401).json({error: "Non authorizer à supprimer cet échange!"})
+            }else{
+                const fichierName = exchange.imageUrl.split('/images/')[1];
+                fs.unlink(`public/images/${fichierName}`, () => {
+                    Exchange.deleteOne({_id: req.params.id})
+                        .then(() => res.status(200).json({message: "Echange supprimer avec succès!"}))
+                        .catch(() => res.status(500).json({error: "Erreur survenue au serveur"}));
+                    })
+            }
         })
         .catch(() => res.status(404).json({error: "Impossible de trouver cet échange!"}));
 }

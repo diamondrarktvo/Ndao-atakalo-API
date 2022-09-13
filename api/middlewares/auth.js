@@ -10,7 +10,7 @@ const auth = (req, res, next) => {
         }
         next();
     } catch(error){
-       res.status(400).json({error});
+       res.status(400).json({error: "Authorization failed"});
     }
 }
 module.exports = auth;
