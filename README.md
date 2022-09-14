@@ -86,9 +86,10 @@ Les routes :
    ```
    ### GET TOUS LES ECHANGES
   ```
-1. GET http://<host>:3030/api/v1/exchange/list
+1. GET http://<host>:3030/api/v1/exchange/list?page=number (1 | 2 , ....)
+   si ?page n'est pas mentionné , ceci retourne les 5 premiers (page 1)
    ```
-   => RETOUR : [ARRAY]
+   => RETOUR : [ARRAY OF 5 EXCHANGES]
    ```
    {
       "_id": id de l'échange,
@@ -100,9 +101,25 @@ Les routes :
       "status": (0 | 1) active | desactive,
    }
    ```
+   ### GET ECHANGES ACTIFS
+     ```
+2. GET http://<host>:3030/api/v1/exchange/actif
+   ```
+   => RETOUR : [ARRAY]
+   ```
+   {
+      "_id": id de l'échange,
+      "userId": id du créateur de cet échange,
+      "user": nom du créateur de cet échange,
+      "contact": contact du créateur de cet échange,
+      "exchangeTo": jouet au quel il veut échanger contre son jouet,
+      "imageUrl": image de son jouet,
+      "status": 1 (active)
+   }
+   ```
    ### CREER UN ECHANGE
    ```
-2. POST http://<host>:3030/api/v1/exchange
+3. POST http://<host>:3030/api/v1/exchange
   content-type: multipart/form-data
   Authorization: Bearer <token>
 {
@@ -121,7 +138,7 @@ Les routes :
 ```
 ### UPDATE UN ECHANGE
    ```
-3. PATCH http://<host>:3030/api/v1/exchange/:id (id de l'échange)
+4. PATCH http://<host>:3030/api/v1/exchange/:id (id de l'échange)
   content-type: multipart/form-data
   Authorization: Bearer <token>
 {
@@ -147,7 +164,7 @@ Les routes :
 ```
 ### SUPPRIME UN ECHANGE
    ```
-4. DELETE http://<host>:3030/api/v1/exchange/:id (id de l'échange)
+5. DELETE http://<host>:3030/api/v1/exchange/:id (id de l'échange)
   Authorization: Bearer <token>
   
 ```
@@ -161,7 +178,7 @@ Les routes :
 ## LOGIN && SIGN UP
 ### login
 ```
-5. POST http://<host>:3030/api/v1/auth/signin
+6. POST http://<host>:3030/api/v1/auth/signin
   content-type: application/json
 {
       "email": email de l'utilisateur,
@@ -178,7 +195,7 @@ Les routes :
 ```
 ### Signup
 ```
-6. POST http://<host>:3030/api/v1/auth/signup
+7. POST http://<host>:3030/api/v1/auth/signup
   content-type: application/json
 {
       "email": email de l'utilisateur,
