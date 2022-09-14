@@ -102,7 +102,7 @@ Les routes :
    }
    ```
    ### GET ECHANGES ACTIFS
-     ```
+   ```
 2. GET http://<host>:3030/api/v1/exchange/actif
    ```
    => RETOUR : [ARRAY]
