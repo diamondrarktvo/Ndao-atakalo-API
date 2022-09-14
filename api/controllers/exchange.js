@@ -90,7 +90,7 @@ exports.getOneExchange = (req, res, next) => {
 };
 
 /**
- * Get list of exchange controller
+ * Get list of exchange paginate 5 exchange per page controller
  */
 exports.getAllExchange = (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page) : 1;
