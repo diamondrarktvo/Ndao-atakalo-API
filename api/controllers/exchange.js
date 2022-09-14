@@ -93,7 +93,18 @@ exports.getOneExchange = (req, res, next) => {
  * Get list of exchange controller
  */
 exports.getAllExchange = (req, res, next) => {
-    Exchange.find()
-        .then((exchanges) => res.status(200).json(exchanges))
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const limit = 5;
+    Exchange.find().limit(limit).skip((page - 1) * limit)
+        .then((exchanges) => res.status(200).json({exchanges, page: page}))
         .catch(() => res.status(400).json({error: "Impossible d'obtenir la liste!"}));
 };
+
+/**
+ * Get list exchange active
+ */
+exports.getExchangeActive = (req, res, next) => {
+    Exchange.find({status: 1})
+        .then((exchanges) => res.status(200).json(exchanges))
+        .catch(() => res.status(400).json({error: "Impossible d'obtenir la liste des échanges actives!"}));
+}

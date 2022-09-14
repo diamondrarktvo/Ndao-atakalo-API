@@ -9,6 +9,7 @@ router.post('/changeStatus/:id', auth, exchangeCtrl.changeStatusExchange);
 router.patch('/:id', auth,  multer, exchangeCtrl.updateExchange);
 router.delete('/:id', auth, exchangeCtrl.deleteOneExchange);
 router.get('/list', exchangeCtrl.getAllExchange);
+router.get('/active', exchangeCtrl.getExchangeActive);
 router.get('/:id', exchangeCtrl.getOneExchange);
 
 module.exports = router;
